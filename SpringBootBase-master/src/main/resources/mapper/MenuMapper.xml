@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aixbox.usercenter.mapper.MenuMapper">
+    <select id="findPermsByUserId" resultType="java.lang.String">
+        SELECT DISTINCT sys_menu.perms FROM sys_user_role
+                                                LEFT JOIN sys_role ON sys_user_role.role_id= sys_role.id
+                                                LEFT JOIN sys_role_menu ON sys_role.id = sys_role_menu.role_id
+                                                LEFT JOIN sys_menu ON sys_role_menu.role_id = sys_menu.id
+        WHERE
+            user_id=#{id}
+          AND sys_role.`status`=0
+          AND sys_menu.`status`=0
+    </select>
+</mapper>
